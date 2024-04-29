@@ -66,7 +66,10 @@ export default defineComponent({
       } finally {
         this.isTodoLoading = false;
       }
-    }
+    },
+    changeFilter(filter: FilterType) {
+      this.activeFilter = filter
+    },
   },
   mounted() {
     this.fetchTodos();
@@ -77,7 +80,8 @@ export default defineComponent({
 <template>
   <AppHeader
       :stats
-      :active-filter
+      :active-filter="activeFilter"
+      @change-filter="changeFilter"
   />
 
   <TodoList

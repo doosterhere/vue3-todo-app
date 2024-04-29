@@ -10,12 +10,21 @@ export default defineComponent({
       type: Object as PropType<Todo>,
       required: true
     }
+  },
+  methods: {
+    toggleTodo() {
+      this.$emit('toggle-todo', this.todo.id)
+    }
+  },
+  emits: {
+    'toggle-todo': (id: number) => Number.isInteger(id)
   }
-})
+});
 </script>
 
 <template>
   <li
+      @click="toggleTodo"
       class="todo-item"
   >
     <div class="todo-item__status">

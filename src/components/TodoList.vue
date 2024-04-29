@@ -13,14 +13,23 @@ export default defineComponent({
       type: Array as PropType<Todo[]>,
       required: true
     }
+  },
+  methods: {
+    toggleTodo(id: number) {
+      this.$emit('toggle-todo', id)
+    }
+  },
+  emits: {
+    'toggle-todo': (id: number) => Number.isInteger(id)
   }
-})
+});
 </script>
 
 <template>
   <ul class="todo-list">
     <TodoListItem
         v-for="todo in todos"
+        @toggle-todo="toggleTodo(todo.id)"
         :todo="todo"
         :key="todo.id"
         :class="{ 'todo-item_done': todo.completed }"

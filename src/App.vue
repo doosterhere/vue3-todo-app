@@ -46,7 +46,18 @@ export default defineComponent({
         active: this.activeTodos.length,
         done: this.doneTodos.length
       }
-    }
+    },
+    filteredTodos(): Todo[] {
+      switch (this.activeFilter) {
+        case FilterType.Active:
+          return this.activeTodos
+        case FilterType.Done:
+          return this.doneTodos
+        case FilterType.All:
+        default:
+          return this.todos
+      }
+    },
   },
   methods: {
     async fetchTodos(): Promise<void> {
@@ -85,7 +96,7 @@ export default defineComponent({
   />
 
   <TodoList
-      :todos
+      :todos="filteredTodos"
   />
 </template>
 

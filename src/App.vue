@@ -6,6 +6,7 @@ import axios from "axios";
 import type {Todo} from "@/types/Todo";
 
 import AppHeader from "@/components/AppHeader.vue";
+import TodoList from "@/components/TodoList.vue";
 
 interface State {
   todos: Todo[],
@@ -18,7 +19,8 @@ interface State {
 export default defineComponent({
   name: "App",
   components: {
-    AppHeader
+    AppHeader,
+    TodoList
   },
   data(): State {
     return {
@@ -72,6 +74,10 @@ export default defineComponent({
 <template>
   <AppHeader
       :stats
+  />
+
+  <TodoList
+      :todos
   />
 </template>
 

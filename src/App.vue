@@ -79,8 +79,34 @@ export default defineComponent({
       }
     },
     changeFilter(filter: FilterType) {
-      this.activeFilter = filter
+      this.activeFilter = filter;
     },
+    async toggleTodo(id: number): Promise<void> {
+      try {
+        const completed = this.todos.find((todo) => todo.id === id)!.completed;
+        this.isTodoLoading = true;
+        const response = await axios(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+          method: 'PATCH',
+          data: {
+            completed: !completed
+          }
+        });
+
+        if (response.status === 200) {
+          this.todos = this.todos.map((todo) => {
+            if (todo.id === id) {
+              todo.completed = !todo.completed;
+            }
+
+            return todo;
+          })
+        }
+      } catch {
+        alert('Error while toggling todo');
+      } finally {
+        this.isTodoLoading = false;
+      }
+    }
   },
   mounted() {
     this.fetchTodos();
@@ -96,6 +122,7 @@ export default defineComponent({
   />
 
   <TodoList
+      @toggle-todo="toggleTodo"
       :todos="filteredTodos"
   />
 </template>

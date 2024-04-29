@@ -2,12 +2,20 @@
 import {defineComponent, type PropType} from 'vue';
 
 import type {StatsType} from "@/types/StatsType";
+import type {FilterType} from "@/types/FilterType";
+
+import TodoFilters from "@/components/TodoFilters.vue";
 
 export default defineComponent({
   name: 'AppHeader',
+  components: {TodoFilters},
   props: {
     stats: {
       type: Object as PropType<StatsType>,
+      required: true
+    },
+    activeFilter: {
+      type: String as PropType<FilterType>,
       required: true
     }
   },
@@ -23,7 +31,7 @@ export default defineComponent({
       return `${done} ${thing} done`;
     }
   }
-})
+});
 </script>
 
 <template>
@@ -32,6 +40,10 @@ export default defineComponent({
     <div class="app-header__report">
       {{ activeReport }}, {{ doneReport }}
     </div>
+
+    <TodoFilters
+        :active-filter="activeFilter"
+    />
 
     <BaseButton>
       Add new todo

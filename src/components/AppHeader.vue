@@ -30,7 +30,13 @@ export default defineComponent({
       const thing = done > 1 ? 'things' : 'thing';
       return `${done} ${thing} done`;
     }
-  }
+  },
+  methods: {
+    changeFilter(filter: FilterType) {
+      this.$emit('change-filter', filter)
+    }
+  },
+  emits: ['change-filter']
 });
 </script>
 
@@ -43,6 +49,7 @@ export default defineComponent({
 
     <TodoFilters
         :active-filter="activeFilter"
+        @change-filter="changeFilter"
     />
 
     <BaseButton>

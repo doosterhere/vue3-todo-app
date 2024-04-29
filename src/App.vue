@@ -4,6 +4,7 @@ import {defineComponent} from 'vue';
 import axios from "axios";
 
 import type {Todo} from "@/types/Todo";
+import {FilterType} from "@/types/FilterType";
 
 import AppHeader from "@/components/AppHeader.vue";
 import TodoList from "@/components/TodoList.vue";
@@ -13,7 +14,8 @@ interface State {
   page: number,
   totalPages: number,
   limit: number,
-  isTodoLoading: boolean
+  isTodoLoading: boolean,
+  activeFilter: FilterType
 }
 
 export default defineComponent({
@@ -28,7 +30,8 @@ export default defineComponent({
       page: 1,
       totalPages: 0,
       limit: 10,
-      isTodoLoading: false
+      isTodoLoading: false,
+      activeFilter: FilterType.All,
     }
   },
   computed: {
@@ -74,6 +77,7 @@ export default defineComponent({
 <template>
   <AppHeader
       :stats
+      :active-filter
   />
 
   <TodoList

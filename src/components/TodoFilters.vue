@@ -23,6 +23,14 @@ export default defineComponent({
         FilterType.Done
       ]
     }
+  },
+  methods: {
+    changeFilter(filter: FilterType) {
+      this.$emit('change-filter', filter)
+    }
+  },
+  emits: {
+    'change-filter': (filter: FilterType) => filter
   }
 });
 </script>
@@ -34,6 +42,7 @@ export default defineComponent({
           v-for="filter in filters"
           :key="filter"
           :class="{'button_primary': activeFilter === filter}"
+          @click="changeFilter(filter)"
       >
         {{ filter }}
       </BaseButton>

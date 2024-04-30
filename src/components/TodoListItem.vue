@@ -19,11 +19,15 @@ export default defineComponent({
     },
     showRemoveDialog() {
       this.$emit('show-remove-dialog', this.todo.id);
+    },
+    showEditDialog() {
+      this.$emit('show-edit-dialog', this.todo.id);
     }
   },
   emits: {
     'toggle-todo': (id: number) => Number.isInteger(id),
-    'show-remove-dialog': (id: number) => Number.isInteger(id)
+    'show-remove-dialog': (id: number) => Number.isInteger(id),
+    'show-edit-dialog': (id: number) => Number.isInteger(id)
   }
 });
 </script>
@@ -41,6 +45,7 @@ export default defineComponent({
 
     <div class="todo-item__actions">
       <BaseButton
+          @click.stop="showEditDialog"
           class="todo-item__edit-button"
       >
         <i class="fa-regular fa-pen-to-square"></i>
@@ -143,9 +148,13 @@ export default defineComponent({
       transition: opacity 0.2s;
 
       &:hover {
-        color: $color-primary;
+        color: $color-done;
 
         cursor: inherit;
+
+        .fa-trash {
+          color: $color-danger;
+        }
       }
     }
   }

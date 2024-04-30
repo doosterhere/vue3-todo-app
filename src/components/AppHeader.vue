@@ -33,10 +33,13 @@ export default defineComponent({
   },
   methods: {
     changeFilter(filter: FilterType) {
-      this.$emit('change-filter', filter)
+      this.$emit('change-filter', filter);
+    },
+    showAddTodoDialog() {
+      this.$emit('show-add-todo-dialog');
     }
   },
-  emits: ['change-filter']
+  emits: ['change-filter', 'show-add-todo-dialog']
 });
 </script>
 
@@ -52,7 +55,8 @@ export default defineComponent({
         @change-filter="changeFilter"
     />
 
-    <BaseButton>
+    <BaseButton @click="showAddTodoDialog">
+      <i class="fa-solid fa-plus"></i>
       Add new todo
     </BaseButton>
   </header>

@@ -108,6 +108,12 @@ export default defineComponent({
       } finally {
         this.isTodoLoading = false;
       }
+    },
+    showModal() {
+      this.isModalVisible = true;
+    },
+    showAddTodoDialog() {
+      this.showModal();
     }
   },
   mounted() {
@@ -121,6 +127,7 @@ export default defineComponent({
       :stats
       :active-filter="activeFilter"
       @change-filter="changeFilter"
+      @show-add-todo-dialog="showAddTodoDialog"
   />
 
   <TodoList

@@ -31,14 +31,16 @@ export default defineComponent({
 
 <template>
   <ul class="todo-list">
-    <TodoListItem
-        v-for="todo in todos"
-        @toggle-todo="toggleTodo(todo.id)"
-        @show-remove-dialog="showRemoveDialog(todo.id)"
-        :todo="todo"
-        :key="todo.id"
-        :class="{ 'todo-item_done': todo.completed }"
-    />
+    <transition-group name="todo-list">
+      <TodoListItem
+          v-for="todo in todos"
+          @toggle-todo="toggleTodo(todo.id)"
+          @show-remove-dialog="showRemoveDialog(todo.id)"
+          :todo="todo"
+          :key="todo.id"
+          :class="{ 'todo-item_done': todo.completed }"
+      />
+    </transition-group>
   </ul>
 </template>
 
@@ -48,5 +50,25 @@ export default defineComponent({
   padding: 0;
 
   list-style: none;
+}
+
+.todo-list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.todo-list-enter-active,
+.todo-list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.todo-list-enter-from,
+.todo-list-leave-to {
+  opacity: 0;
+  transform: translateX(130px);
+}
+
+.todo-list-move {
+  transition: transform 0.5s ease;
 }
 </style>

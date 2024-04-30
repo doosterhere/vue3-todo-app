@@ -17,6 +17,18 @@ html {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+
+      .fa-plus {
+        color: $color-primary;
+      }
+
+      .fa-ban {
+        color: $color-danger;
+      }
+
+      .fa-check {
+        color: $color-done;
+      }
     }
   }
 }

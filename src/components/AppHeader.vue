@@ -5,10 +5,11 @@ import type {StatsType} from "@/types/StatsType";
 import type {FilterType} from "@/types/FilterType";
 
 import TodoFilters from "@/components/TodoFilters.vue";
+import AppSpinner from "@/components/AppSpinner.vue";
 
 export default defineComponent({
   name: 'AppHeader',
-  components: {TodoFilters},
+  components: {AppSpinner, TodoFilters},
   props: {
     stats: {
       type: Object as PropType<StatsType>,
@@ -16,6 +17,10 @@ export default defineComponent({
     },
     activeFilter: {
       type: String as PropType<FilterType>,
+      required: true
+    },
+    isLoading: {
+      type: Boolean,
       required: true
     }
   },
@@ -45,7 +50,12 @@ export default defineComponent({
 
 <template>
   <header class="app-header">
-    <h3 class="title">Todos list</h3>
+    <div class="title-block">
+      <h3 class="title">
+        Todos list
+      </h3>
+      <AppSpinner v-if="isLoading"/>
+    </div>
     <div class="app-header__report">
       {{ activeReport }}, {{ doneReport }}
     </div>
@@ -79,12 +89,25 @@ export default defineComponent({
 
   background-color: white;
 
-  .title {
-    margin: 5px;
-    font-size: 2.4rem;
-    font-weight: 500;
-    color: $color-primary
+  .title-block {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .title {
+      margin: 5px;
+      font-size: 2.4rem;
+      font-weight: 500;
+      color: $color-primary
+    }
+
+    .spinner {
+      position: absolute;
+      left: 120%;
+    }
   }
+
 
   .app-header__report {
     font-size: 1.4rem;

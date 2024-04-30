@@ -10,6 +10,7 @@ import AppHeader from "@/components/AppHeader.vue";
 import TodoList from "@/components/TodoList.vue";
 import FormAddTodo from "@/components/FormAddTodo.vue";
 import ConfirmationDialog from "@/components/ConfirmationDialog.vue";
+import FormEditTodo from "@/components/FormEditTodo.vue";
 
 interface State {
   todos: Todo[],
@@ -22,7 +23,8 @@ interface State {
   modalWithAdd: boolean,
   editedId: number,
   confirmationTitle: string,
-  modalWithConfirm: boolean
+  modalWithConfirm: boolean,
+  modalWithEdit: boolean
 }
 
 export default defineComponent({
@@ -31,7 +33,8 @@ export default defineComponent({
     AppHeader,
     TodoList,
     FormAddTodo,
-    ConfirmationDialog
+    ConfirmationDialog,
+    FormEditTodo
   },
   data(): State {
     return {
@@ -45,7 +48,8 @@ export default defineComponent({
       modalWithAdd: false,
       editedId: 0,
       confirmationTitle: 'Are you sure?',
-      modalWithConfirm: false
+      modalWithConfirm: false,
+      modalWithEdit: false
     }
   },
   computed: {
@@ -132,6 +136,7 @@ export default defineComponent({
       this.isModalVisible = false;
       this.modalWithAdd = false;
       this.modalWithConfirm = false;
+      this.modalWithEdit = false;
     },
     async addTodo(todo: Partial<Todo>): Promise<void> {
       try {
@@ -170,7 +175,38 @@ export default defineComponent({
       } catch {
         alert('Error while removing todo');
       } finally {
-        this.isTodoLoading = false
+        this.isTodoLoading = false;
+        this.hideModal();
+      }
+    },
+    showEditTodoDialog(id: number) {
+      this.editedId = id;
+      this.modalWithEdit = true;
+      this.showModal();
+    },
+    async editTodo(editedTodo: Todo): Promise<void> {
+      try {
+        this.isTodoLoading = true;
+        const response = await axios(`https://jsonplaceholder.typicode.com/todos/${editedTodo.id}`, {
+          method: 'PATCH',
+          data: {
+            title: editedTodo.title
+          }
+        });
+
+        if (response.status === 200) {
+          this.todos = this.todos.map(todo => {
+            if (todo.id === editedTodo.id) {
+              todo.title = editedTodo.title;
+            }
+
+            return todo;
+          });
+        }
+      } catch {
+        alert('Error while editing todo');
+      } finally {
+        this.isTodoLoading = false;
         this.hideModal();
       }
     }
@@ -187,11 +223,13 @@ export default defineComponent({
       :active-filter="activeFilter"
       @change-filter="changeFilter"
       @show-add-todo-dialog="showAddTodoDialog"
+      @show-edit-dialog="showEditTodoDialog"
   />
 
   <TodoList
       @toggle-todo="toggleTodo"
       @show-remove-dialog="showRemoveDialog"
+      @show-edit-dialog="showEditTodoDialog"
       :todos="filteredTodos"
   />
 
@@ -202,6 +240,13 @@ export default defineComponent({
         v-if="modalWithAdd"
         @add-todo="addTodo"
         @cancel-add-todo="hideModal"
+    />
+
+    <FormEditTodo
+        :todo="todos.find(todo => todo.id === editedId)"
+        v-if="modalWithEdit"
+        @edit-todo="editTodo"
+        @cancel-edit-todo="hideModal"
     />
 
     <ConfirmationDialog

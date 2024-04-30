@@ -15,7 +15,8 @@ interface State {
   totalPages: number,
   limit: number,
   isTodoLoading: boolean,
-  activeFilter: FilterType
+  activeFilter: FilterType,
+  isModalVisible: boolean
 }
 
 export default defineComponent({
@@ -32,6 +33,7 @@ export default defineComponent({
       limit: 10,
       isTodoLoading: false,
       activeFilter: FilterType.All,
+      isModalVisible: false
     }
   },
   computed: {
@@ -125,6 +127,11 @@ export default defineComponent({
       @toggle-todo="toggleTodo"
       :todos="filteredTodos"
   />
+
+  <BaseModal
+      v-model:is-visible="isModalVisible"
+  >
+  </BaseModal>
 </template>
 
 <style scoped lang="scss">

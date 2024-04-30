@@ -279,6 +279,7 @@ export default defineComponent({
 
   <BaseModal
       v-model:is-visible="isModalVisible"
+      @close="hideModal"
   >
     <FormAddTodo
         v-if="modalWithAdd"

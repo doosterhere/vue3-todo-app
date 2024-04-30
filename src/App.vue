@@ -217,7 +217,7 @@ export default defineComponent({
     handleIntersect(entries: IntersectionObserverEntry[]) {
       entries.forEach(({isIntersecting}) => {
         if (isIntersecting && (this.page < this.totalPages || this.totalPages === 0)) {
-          console.log('intersecting');
+          this.loadMoreTodos();
         }
       })
     },
@@ -233,6 +233,24 @@ export default defineComponent({
       const observerRef = this.$refs.observer as { $el: HTMLElement };
       const observeElement = observerRef.$el as HTMLElement;
       this.observer.observe(observeElement);
+    },
+    async loadMoreTodos(): Promise<void> {
+      try {
+        this.isTodoLoading = true;
+        this.page++;
+        const response = await axios(`https://jsonplaceholder.typicode.com/todos`, {
+          params: {
+            _page: this.page,
+            _limit: this.limit
+          }
+        });
+        this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit);
+        this.todos = [...this.todos, ...response.data];
+      } catch {
+        alert('Error while loading todos');
+      } finally {
+        this.isTodoLoading = false;
+      }
     }
   },
   mounted() {

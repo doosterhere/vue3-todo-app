@@ -1,7 +1,7 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import {defineComponent} from 'vue';
 
-import type { Todo } from '@/types/Todo'
+import type {Todo} from '@/types/Todo';
 
 interface State {
   newTodoTitle: string
@@ -21,26 +21,26 @@ export default defineComponent({
         title: this.newTodoTitle || 'new todo',
         completed: false
       }
-      this.$emit('add-todo', newTodo)
-      this.newTodoTitle = ''
+      this.$emit('add-todo', newTodo);
+      this.newTodoTitle = '';
     },
     cancelAddTodo() {
-      this.newTodoTitle = ''
-      this.$emit('cancel-add-todo')
+      this.newTodoTitle = '';
+      this.$emit('cancel-add-todo');
     }
   },
   emits: ['add-todo', 'cancel-add-todo']
-})
+});
 </script>
 
 <template>
   <form
-    @submit.prevent
-    class="form-todo"
+      @submit.prevent
+      class="form-todo"
   >
     <BaseInput
-      v-model="newTodoTitle"
-      placeholder="New todo title"
+        v-model="newTodoTitle"
+        placeholder="New todo title"
     />
     <div class="form-todo__actions">
       <BaseButton @click="addTodo">

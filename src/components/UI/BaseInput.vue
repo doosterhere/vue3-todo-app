@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import {defineComponent} from 'vue';
 
 export default defineComponent({
   name: 'BaseInput',
@@ -14,16 +14,23 @@ export default defineComponent({
     modelValue: {
       type: [String, Number]
     }
+  },
+  methods: {
+    updateInput(event: Event) {
+      const target = event.target as HTMLInputElement;
+      this.$emit('update:modelValue', target.value);
+    }
   }
-})
+});
 </script>
 
 <template>
   <input
-    :type
-    :placeholder
-    :value="modelValue"
-    class="base-input"
+      :type
+      :placeholder
+      :value="modelValue"
+      @input="updateInput"
+      class="base-input"
   >
 </template>
 

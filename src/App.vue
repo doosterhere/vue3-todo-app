@@ -8,6 +8,7 @@ import {FilterType} from "@/types/FilterType";
 
 import AppHeader from "@/components/AppHeader.vue";
 import TodoList from "@/components/TodoList.vue";
+import FormAddTodo from "@/components/FormAddTodo.vue";
 
 interface State {
   todos: Todo[],
@@ -16,14 +17,16 @@ interface State {
   limit: number,
   isTodoLoading: boolean,
   activeFilter: FilterType,
-  isModalVisible: boolean
+  isModalVisible: boolean,
+  modalWithAdd: boolean
 }
 
 export default defineComponent({
   name: "App",
   components: {
     AppHeader,
-    TodoList
+    TodoList,
+    FormAddTodo
   },
   data(): State {
     return {
@@ -33,7 +36,8 @@ export default defineComponent({
       limit: 10,
       isTodoLoading: false,
       activeFilter: FilterType.All,
-      isModalVisible: false
+      isModalVisible: false,
+      modalWithAdd: false
     }
   },
   computed: {
@@ -113,7 +117,30 @@ export default defineComponent({
       this.isModalVisible = true;
     },
     showAddTodoDialog() {
+      this.modalWithAdd = true;
       this.showModal();
+    },
+    hideModal() {
+      this.isModalVisible = false;
+      this.modalWithAdd = false;
+    },
+    async addTodo(todo: Partial<Todo>): Promise<void> {
+      try {
+        this.isTodoLoading = true;
+        const response = await axios('https://jsonplaceholder.typicode.com/todos', {
+          method: 'POST',
+          data: todo
+        });
+
+        if (response.status === 201) {
+          this.todos = [response.data as Todo, ...this.todos];
+        }
+      } catch {
+        alert('Error while adding todo');
+      } finally {
+        this.isTodoLoading = false;
+        this.hideModal();
+      }
     }
   },
   mounted() {
@@ -138,6 +165,11 @@ export default defineComponent({
   <BaseModal
       v-model:is-visible="isModalVisible"
   >
+    <FormAddTodo
+        v-if="modalWithAdd"
+        @add-todo="addTodo"
+        @cancel-add-todo="hideModal"
+    />
   </BaseModal>
 </template>
 

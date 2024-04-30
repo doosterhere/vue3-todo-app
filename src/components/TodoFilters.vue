@@ -66,32 +66,32 @@ export default defineComponent({
     border: 0.1rem solid $color-light;
     border-radius: 1.6rem;
 
-    button:not(:last-child) {
+    .base-button:not(:last-child) {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     }
 
-    button:not(:first-child) {
+    .base-button:not(:first-child) {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     }
 
-    button:nth-child(2) {
+    .base-button:nth-child(2) {
       border-left: none;
       border-right: none;
     }
 
-    button.button_primary {
+    .base-button.button_primary {
       border: 2px solid $color-primary;
 
       font-weight: 450;
     }
 
-    button.button_primary + button.base-button {
+    .base-button.button_primary + .base-button {
       border-left-color: transparent;
     }
 
-    button.base-button:has(+ button.button_primary) {
+    .base-button:has(+ .button_primary) {
       border-right-color: transparent;
     }
   }

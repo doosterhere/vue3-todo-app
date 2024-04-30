@@ -25,7 +25,8 @@ interface State {
   editedId: number,
   confirmationTitle: string,
   modalWithConfirm: boolean,
-  modalWithEdit: boolean
+  modalWithEdit: boolean,
+  observer: IntersectionObserver | null
 }
 
 export default defineComponent({
@@ -51,7 +52,8 @@ export default defineComponent({
       editedId: 0,
       confirmationTitle: 'Are you sure?',
       modalWithConfirm: false,
-      modalWithEdit: false
+      modalWithEdit: false,
+      observer: null
     }
   },
   computed: {
@@ -158,7 +160,7 @@ export default defineComponent({
         this.hideModal();
       }
     },
-    showRemoveDialog(id: number) {
+    showRemoveTodoDialog(id: number) {
       this.editedId = id;
       this.confirmationTitle = 'Are you sure you want to remove this todo?';
       this.modalWithConfirm = true;
@@ -211,11 +213,37 @@ export default defineComponent({
         this.isTodoLoading = false;
         this.hideModal();
       }
+    },
+    handleIntersect(entries: IntersectionObserverEntry[]) {
+      entries.forEach(({isIntersecting}) => {
+        if (isIntersecting && (this.page < this.totalPages || this.totalPages === 0)) {
+          console.log('intersecting');
+        }
+      })
+    },
+    startObserving() {
+      this.observer = new IntersectionObserver(
+          this.handleIntersect,
+          {
+            rootMargin: '0px',
+            threshold: 1.0
+          }
+      );
+
+      const observerRef = this.$refs.observer as { $el: HTMLElement };
+      const observeElement = observerRef.$el as HTMLElement;
+      this.observer.observe(observeElement);
     }
   },
   mounted() {
     this.fetchTodos();
+    this.startObserving();
   },
+  beforeUnmount() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+  }
 });
 </script>
 
@@ -229,12 +257,12 @@ export default defineComponent({
 
   <TodoList
       @toggle-todo="toggleTodo"
-      @show-remove-dialog="showRemoveDialog"
+      @show-remove-dialog="showRemoveTodoDialog"
       @show-edit-dialog="showEditTodoDialog"
       :todos="filteredTodos"
   />
 
-  <AppFooter/>
+  <AppFooter ref="observer"/>
 
   <BaseModal
       v-model:is-visible="isModalVisible"

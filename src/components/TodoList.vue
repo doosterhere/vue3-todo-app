@@ -16,11 +16,15 @@ export default defineComponent({
   },
   methods: {
     toggleTodo(id: number) {
-      this.$emit('toggle-todo', id)
+      this.$emit('toggle-todo', id);
+    },
+    showRemoveDialog(id: number) {
+      this.$emit('show-remove-dialog', id);
     }
   },
   emits: {
-    'toggle-todo': (id: number) => Number.isInteger(id)
+    'toggle-todo': (id: number) => Number.isInteger(id),
+    'show-remove-dialog': (id: number) => Number.isInteger(id)
   }
 });
 </script>
@@ -30,6 +34,7 @@ export default defineComponent({
     <TodoListItem
         v-for="todo in todos"
         @toggle-todo="toggleTodo(todo.id)"
+        @show-remove-dialog="showRemoveDialog(todo.id)"
         :todo="todo"
         :key="todo.id"
         :class="{ 'todo-item_done': todo.completed }"

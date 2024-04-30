@@ -9,6 +9,7 @@ import {FilterType} from "@/types/FilterType";
 import AppHeader from "@/components/AppHeader.vue";
 import TodoList from "@/components/TodoList.vue";
 import FormAddTodo from "@/components/FormAddTodo.vue";
+import ConfirmationDialog from "@/components/ConfirmationDialog.vue";
 
 interface State {
   todos: Todo[],
@@ -18,7 +19,10 @@ interface State {
   isTodoLoading: boolean,
   activeFilter: FilterType,
   isModalVisible: boolean,
-  modalWithAdd: boolean
+  modalWithAdd: boolean,
+  editedId: number,
+  confirmationTitle: string,
+  modalWithConfirm: boolean
 }
 
 export default defineComponent({
@@ -26,7 +30,8 @@ export default defineComponent({
   components: {
     AppHeader,
     TodoList,
-    FormAddTodo
+    FormAddTodo,
+    ConfirmationDialog
   },
   data(): State {
     return {
@@ -37,7 +42,10 @@ export default defineComponent({
       isTodoLoading: false,
       activeFilter: FilterType.All,
       isModalVisible: false,
-      modalWithAdd: false
+      modalWithAdd: false,
+      editedId: 0,
+      confirmationTitle: 'Are you sure?',
+      modalWithConfirm: false
     }
   },
   computed: {
@@ -123,6 +131,7 @@ export default defineComponent({
     hideModal() {
       this.isModalVisible = false;
       this.modalWithAdd = false;
+      this.modalWithConfirm = false;
     },
     async addTodo(todo: Partial<Todo>): Promise<void> {
       try {
@@ -141,6 +150,12 @@ export default defineComponent({
         this.isTodoLoading = false;
         this.hideModal();
       }
+    },
+    showRemoveDialog(id: number) {
+      this.editedId = id;
+      this.confirmationTitle = 'Are you sure you want to remove this todo?';
+      this.modalWithConfirm = true;
+      this.showModal();
     }
   },
   mounted() {
@@ -159,6 +174,7 @@ export default defineComponent({
 
   <TodoList
       @toggle-todo="toggleTodo"
+      @show-remove-dialog="showRemoveDialog"
       :todos="filteredTodos"
   />
 
@@ -169,6 +185,12 @@ export default defineComponent({
         v-if="modalWithAdd"
         @add-todo="addTodo"
         @cancel-add-todo="hideModal"
+    />
+
+    <ConfirmationDialog
+        :title="confirmationTitle"
+        v-if="modalWithConfirm"
+        @confirm-no="hideModal"
     />
   </BaseModal>
 </template>

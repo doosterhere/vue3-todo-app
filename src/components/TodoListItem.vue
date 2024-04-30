@@ -2,9 +2,11 @@
 import {defineComponent, type PropType} from 'vue';
 
 import type {Todo} from '@/types/Todo';
+import BaseButton from "@/components/UI/BaseButton.vue";
 
 export default defineComponent({
   name: 'TodoListItem',
+  components: {BaseButton},
   props: {
     todo: {
       type: Object as PropType<Todo>,
@@ -13,11 +15,15 @@ export default defineComponent({
   },
   methods: {
     toggleTodo() {
-      this.$emit('toggle-todo', this.todo.id)
+      this.$emit('toggle-todo', this.todo.id);
+    },
+    showRemoveDialog() {
+      this.$emit('show-remove-dialog', this.todo.id);
     }
   },
   emits: {
-    'toggle-todo': (id: number) => Number.isInteger(id)
+    'toggle-todo': (id: number) => Number.isInteger(id),
+    'show-remove-dialog': (id: number) => Number.isInteger(id)
   }
 });
 </script>
@@ -34,17 +40,18 @@ export default defineComponent({
     <span class="todo-item__text">{{ todo.title }}</span>
 
     <div class="todo-item__actions">
-      <button
+      <BaseButton
           class="todo-item__edit-button"
       >
         <i class="fa-regular fa-pen-to-square"></i>
-      </button>
+      </BaseButton>
 
-      <button
+      <BaseButton
+          @click.stop="showRemoveDialog"
           class="todo-item__remove-button"
       >
         <i class="fa-solid fa-trash"></i>
-      </button>
+      </BaseButton>
     </div>
   </li>
 </template>

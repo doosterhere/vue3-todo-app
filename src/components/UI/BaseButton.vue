@@ -1,5 +1,5 @@
 <script lang="ts">
-import {defineComponent, type PropType} from 'vue'
+import {defineComponent, type PropType} from 'vue';
 
 export default defineComponent({
   name: "BaseButton",
@@ -22,6 +22,8 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/variables.scss';
+
 .base-button {
   padding: 5px 10px;
   display: flex;
@@ -35,5 +37,18 @@ export default defineComponent({
 
   background-color: transparent;
   cursor: pointer;
+
+  &.button_primary {
+    color: $color-primary;
+    border: 2px solid $color-primary;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:not(.button_primary):hover {
+    font-weight: 500;
+  }
 }
 </style>

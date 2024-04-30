@@ -156,6 +156,23 @@ export default defineComponent({
       this.confirmationTitle = 'Are you sure you want to remove this todo?';
       this.modalWithConfirm = true;
       this.showModal();
+    },
+    async removeTodo(id: number): Promise<void> {
+      try {
+        this.isTodoLoading = true;
+        const response = await axios(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+          method: 'DELETE'
+        });
+
+        if (response.status === 200) {
+          this.todos = this.todos.filter((todo) => todo.id !== id);
+        }
+      } catch {
+        alert('Error while removing todo');
+      } finally {
+        this.isTodoLoading = false
+        this.hideModal();
+      }
     }
   },
   mounted() {
@@ -190,6 +207,7 @@ export default defineComponent({
     <ConfirmationDialog
         :title="confirmationTitle"
         v-if="modalWithConfirm"
+        @confirm-yes="removeTodo(editedId)"
         @confirm-no="hideModal"
     />
   </BaseModal>

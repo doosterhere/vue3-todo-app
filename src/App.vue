@@ -11,6 +11,7 @@ import TodoList from "@/components/TodoList.vue";
 import FormAddTodo from "@/components/FormAddTodo.vue";
 import ConfirmationDialog from "@/components/ConfirmationDialog.vue";
 import FormEditTodo from "@/components/FormEditTodo.vue";
+import AppFooter from "@/components/AppFooter.vue";
 
 interface State {
   todos: Todo[],
@@ -34,7 +35,8 @@ export default defineComponent({
     TodoList,
     FormAddTodo,
     ConfirmationDialog,
-    FormEditTodo
+    FormEditTodo,
+    AppFooter
   },
   data(): State {
     return {
@@ -223,7 +225,6 @@ export default defineComponent({
       :active-filter="activeFilter"
       @change-filter="changeFilter"
       @show-add-todo-dialog="showAddTodoDialog"
-      @show-edit-dialog="showEditTodoDialog"
   />
 
   <TodoList
@@ -232,6 +233,8 @@ export default defineComponent({
       @show-edit-dialog="showEditTodoDialog"
       :todos="filteredTodos"
   />
+
+  <AppFooter/>
 
   <BaseModal
       v-model:is-visible="isModalVisible"

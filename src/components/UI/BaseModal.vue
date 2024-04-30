@@ -12,6 +12,7 @@ export default defineComponent({
   methods: {
     hideModal() {
       this.$emit('update:isVisible', false);
+      this.$emit('close');
     }
   }
 });

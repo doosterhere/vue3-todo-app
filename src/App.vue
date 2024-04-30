@@ -269,6 +269,7 @@ export default defineComponent({
   <AppHeader
       :stats
       :active-filter="activeFilter"
+      :is-loading="isTodoLoading"
       @change-filter="changeFilter"
       @show-add-todo-dialog="showAddTodoDialog"
   />

@@ -1,7 +1,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 
-import axios from "axios";
+import axios, {type AxiosRequestConfig} from "axios";
 
 import type {Todo} from "@/types/Todo";
 import {FilterType} from "@/types/FilterType";
@@ -27,6 +27,11 @@ interface State {
   modalWithConfirm: boolean,
   modalWithEdit: boolean,
   observer: IntersectionObserver | null
+}
+
+interface JSONPlaceholderParams {
+  _page: number,
+  _limit: number
 }
 
 export default defineComponent({
@@ -85,12 +90,12 @@ export default defineComponent({
     async fetchTodos(): Promise<void> {
       try {
         this.isTodoLoading = true;
-        const response = await axios('https://jsonplaceholder.typicode.com/todos', {
-          params: {
-            _page: this.page,
-            _limit: this.limit
-          }
-        });
+        const params: JSONPlaceholderParams = {
+          _page: this.page,
+          _limit: this.limit
+        };
+        const options: AxiosRequestConfig = {params};
+        const response = await axios.get('https://jsonplaceholder.typicode.com/todos', options);
 
         this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit);
         this.todos = response.data;
@@ -107,11 +112,8 @@ export default defineComponent({
       try {
         const completed = this.todos.find((todo) => todo.id === id)!.completed;
         this.isTodoLoading = true;
-        const response = await axios(`https://jsonplaceholder.typicode.com/todos/${id}`, {
-          method: 'PATCH',
-          data: {
-            completed: !completed
-          }
+        const response = await axios.patch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+          completed: !completed
         });
 
         if (response.status === 200) {
@@ -145,10 +147,7 @@ export default defineComponent({
     async addTodo(todo: Partial<Todo>): Promise<void> {
       try {
         this.isTodoLoading = true;
-        const response = await axios('https://jsonplaceholder.typicode.com/todos', {
-          method: 'POST',
-          data: todo
-        });
+        const response = await axios.post('https://jsonplaceholder.typicode.com/todos', todo);
 
         if (response.status === 201) {
           this.todos = [response.data as Todo, ...this.todos];
@@ -169,9 +168,7 @@ export default defineComponent({
     async removeTodo(id: number): Promise<void> {
       try {
         this.isTodoLoading = true;
-        const response = await axios(`https://jsonplaceholder.typicode.com/todos/${id}`, {
-          method: 'DELETE'
-        });
+        const response = await axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`);
 
         if (response.status === 200) {
           this.todos = this.todos.filter((todo) => todo.id !== id);
@@ -191,11 +188,8 @@ export default defineComponent({
     async editTodo(editedTodo: Todo): Promise<void> {
       try {
         this.isTodoLoading = true;
-        const response = await axios(`https://jsonplaceholder.typicode.com/todos/${editedTodo.id}`, {
-          method: 'PATCH',
-          data: {
-            title: editedTodo.title
-          }
+        const response = await axios.patch(`https://jsonplaceholder.typicode.com/todos/${editedTodo.id}`, {
+          title: editedTodo.title
         });
 
         if (response.status === 200) {
@@ -238,12 +232,12 @@ export default defineComponent({
       try {
         this.isTodoLoading = true;
         this.page++;
-        const response = await axios(`https://jsonplaceholder.typicode.com/todos`, {
-          params: {
-            _page: this.page,
-            _limit: this.limit
-          }
-        });
+        const params: JSONPlaceholderParams = {
+          _page: this.page,
+          _limit: this.limit
+        };
+        const options: AxiosRequestConfig = {params};
+        const response = await axios.get(`https://jsonplaceholder.typicode.com/todos`, options);
         this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit);
         this.todos = [...this.todos, ...response.data];
       } catch {

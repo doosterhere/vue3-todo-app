@@ -35,128 +35,42 @@ export default defineComponent({
 <template>
   <li
       @click="toggleTodo"
-      class="todo-item"
+      class="py-6 px-8 grid grid-cols-todo items-center gap-6
+      cursor-pointer
+      transition-all duration-200
+      hover:shadow
+      not-last-child:border-b not-last-child:border-lightgray"
   >
-    <div class="todo-item__status">
-      <i class="fa-solid fa-check"></i>
+    <div
+        :class="{ 'opacity-0': !todo.completed }"
+        class="w-10 h-10 flex justify-center items-center
+        text-4xl
+        transition-all duration-200"
+    >
+      <i class="fa-solid fa-check text-done"></i>
     </div>
 
-    <span class="todo-item__text">{{ todo.title }}</span>
+    <span
+        :class="{ 'line-through' : todo.completed }"
+        class="font-normal"
+    >
+      {{ todo.title }}
+    </span>
 
-    <div class="todo-item__actions">
+    <div class="flex gap-6">
       <BaseButton
           @click.stop="showEditDialog"
-          class="todo-item__edit-button"
+          class="font-[inherit] bg-transparent border-none button_small"
       >
-        <i class="fa-regular fa-pen-to-square"></i>
+        <i class="fa-regular fa-pen-to-square text-neutral-200 hover:text-done"></i>
       </BaseButton>
 
       <BaseButton
           @click.stop="showRemoveDialog"
-          class="todo-item__remove-button"
+          class="font-[inherit] bg-transparent border-none button_small"
       >
-        <i class="fa-solid fa-trash"></i>
+        <i class="fa-solid fa-trash text-neutral-200 hover:text-danger"></i>
       </BaseButton>
     </div>
   </li>
 </template>
-
-<style scoped lang="scss">
-@import '@/assets/variables';
-
-.todo-item {
-  padding: 1.5rem 2rem;
-  display: grid;
-  grid-template-columns: 2.4rem 1fr 3.2rem;
-  align-items: center;
-  gap: 1.5rem;
-
-  cursor: pointer;
-
-  transition: box-shadow 0.2s;
-
-  &:not(:last-child) {
-    border-bottom: 1px solid $color-gray;
-  }
-
-  &.todo-item_done {
-    .todo-item__text {
-      text-decoration: line-through;
-    }
-
-
-    .todo-item__status {
-      opacity: 1;
-
-      .fa-check {
-        display: block;
-      }
-    }
-  }
-
-  &:hover {
-    box-shadow: 0 1px 20px rgb(240 240 240 / 80%);
-
-    .todo-item__actions {
-      .todo-item__remove-button,
-      .todo-item__edit-button {
-        opacity: 1;
-      }
-    }
-  }
-
-  .todo-item__status {
-    width: 2.4rem;
-    height: 2.4rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    font-size: 2.4rem;
-
-    opacity: 0;
-
-    transition: opacity 0.2s;
-
-    .fa-check {
-      position: relative;
-      top: 0.1rem;
-
-      color: $color-done;
-    }
-  }
-
-  .todo-item__text {
-    font-weight: 400;
-  }
-
-  .todo-item__actions {
-    display: flex;
-    gap: 10px;
-
-    .todo-item__edit-button,
-    .todo-item__remove-button {
-      padding: 0;
-      font: inherit;
-      background-color: transparent;
-      border: none;
-
-      color: $color-secondary;
-
-      opacity: 0;
-
-      transition: opacity 0.2s;
-
-      &:hover {
-        color: $color-done;
-
-        cursor: inherit;
-
-        .fa-trash {
-          color: $color-danger;
-        }
-      }
-    }
-  }
-}
-</style>

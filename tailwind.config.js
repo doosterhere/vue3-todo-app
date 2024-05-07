@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
+import plugin from "tailwindcss/plugin";
+
 export default {
-    content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,vue}"],
+    content: ["./index.html", "./src/**/*.{js,ts,vue}"],
     theme: {
         extend: {
             fontFamily: {
@@ -15,9 +17,16 @@ export default {
                 'gray': '#9e9e9e',
                 'danger': '#de1203',
                 'lightgray': '#ccc'
+            },
+            gridTemplateColumns: {
+                'todo': '2.4rem 1fr 3.2rem'
             }
         },
     },
-    plugins: [],
+    plugins: [
+        plugin(function ({addVariant}) {
+            addVariant('not-last-child', '&:not(:last-child)');
+        })
+    ],
 }
 

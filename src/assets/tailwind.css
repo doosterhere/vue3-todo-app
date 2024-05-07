@@ -8,3 +8,7 @@
     @apply border-2 border-primary
     text-primary font-medium;
 }
+
+.button_small {
+    @apply p-0;
+}

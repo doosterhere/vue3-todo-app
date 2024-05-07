@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent} from 'vue';
 
 export default defineComponent({
   name: 'AppFooter'
@@ -7,12 +7,5 @@ export default defineComponent({
 </script>
 
 <template>
-  <footer class="footer">
-  </footer>
+  <footer class="h-8"></footer>
 </template>
-
-<style scoped lang="scss">
-.footer {
-  height: 20px;
-}
-</style>

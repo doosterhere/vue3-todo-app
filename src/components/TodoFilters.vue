@@ -37,7 +37,7 @@ export default defineComponent({
 
 <template>
   <section class="w-full flex flex-col gap-6">
-    <section class="grid grid-cols-3 box-border border border-light rounded-lg">
+    <section class="grid grid-cols-3">
       <BaseButton
           v-for="filter in filters"
           :key="filter"

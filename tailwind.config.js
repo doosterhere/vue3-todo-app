@@ -19,7 +19,7 @@ export default {
                 'lightgray': '#ccc'
             },
             gridTemplateColumns: {
-                'todo': '2.4rem 1fr 3.2rem'
+                'todo': 'auto 1fr auto'
             }
         },
     },

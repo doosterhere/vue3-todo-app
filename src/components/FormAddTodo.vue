@@ -29,6 +29,10 @@ export default defineComponent({
       this.$emit('cancel-add-todo');
     }
   },
+  mounted() {
+    const inputRef = this.$refs.inputRef as { $el: HTMLInputElement };
+    inputRef.$el.focus();
+  },
   emits: ['add-todo', 'cancel-add-todo']
 });
 </script>
@@ -36,38 +40,22 @@ export default defineComponent({
 <template>
   <form
       @submit.prevent
-      class="form-todo"
+      class="flex flex-col gap-6"
   >
     <BaseInput
         v-model="newTodoTitle"
         placeholder="New todo title"
+        ref="inputRef"
     />
-    <div class="form-todo__actions">
-      <BaseButton @click="addTodo">
-        <i class="fa-solid fa-check"></i>
+    <div class="flex gap-6">
+      <BaseButton @click="addTodo" class="flex-shrink flex-grow flex-auto">
+        <i class="fa-solid fa-check text-done"></i>
         Add todo
       </BaseButton>
-      <BaseButton @click="cancelAddTodo">
-        <i class="fa-solid fa-ban"></i>
+      <BaseButton @click="cancelAddTodo" class="flex-shrink flex-grow flex-auto">
+        <i class="fa-solid fa-ban text-danger"></i>
         Cancel
       </BaseButton>
     </div>
   </form>
 </template>
-
-<style scoped lang="scss">
-.form-todo {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  .form-todo__actions {
-    display: flex;
-    gap: 10px;
-
-    button {
-      flex: 1 1 auto;
-    }
-  }
-}
-</style>

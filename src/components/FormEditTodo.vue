@@ -1,7 +1,7 @@
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue';
+import {defineComponent, type PropType} from 'vue';
 
-import type { Todo } from '@/types/Todo';
+import type {Todo} from '@/types/Todo';
 
 interface State {
   newTodoTitle: string
@@ -40,6 +40,9 @@ export default defineComponent({
     }
 
     this.newTodoTitle = this.todo.title;
+
+    const input = (this.$refs.inputRef as { $el: HTMLInputElement }).$el;
+    input.focus();
   },
   emits: ['edit-todo', 'cancel-edit-todo']
 });
@@ -47,39 +50,23 @@ export default defineComponent({
 
 <template>
   <form
-    @submit.prevent
-    class="form-todo"
+      @submit.prevent
+      class="flex flex-col gap-6"
   >
     <BaseInput
-      placeholder="Edit todo title"
-      v-model="newTodoTitle"
+        placeholder="Edit todo title"
+        v-model="newTodoTitle"
+        ref="inputRef"
     />
-    <div class="form-todo__actions">
-      <BaseButton @click="editTodo">
-        <i class="fa-solid fa-check"></i>
+    <div class="flex gap-6">
+      <BaseButton @click="editTodo" class="flex-shrink flex-grow flex-auto">
+        <i class="fa-solid fa-check text-done"></i>
         Save
       </BaseButton>
-      <BaseButton @click="cancelEditTodo">
-        <i class="fa-solid fa-ban"></i>
+      <BaseButton @click="cancelEditTodo" class="flex-shrink flex-grow flex-auto">
+        <i class="fa-solid fa-ban text-danger"></i>
         Cancel
       </BaseButton>
     </div>
   </form>
 </template>
-
-<style scoped lang="scss">
-.form-todo {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  .form-todo__actions {
-    display: flex;
-    gap: 10px;
-
-    button {
-      flex: 1 1 auto;
-    }
-  }
-}
-</style>

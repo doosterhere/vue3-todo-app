@@ -36,64 +36,21 @@ export default defineComponent({
 </script>
 
 <template>
-  <section class="app-filters">
-    <section class="toggle-group">
+  <section class="w-full flex flex-col gap-6">
+    <section class="grid grid-cols-3 box-border border border-light rounded-lg">
       <BaseButton
           v-for="filter in filters"
           :key="filter"
-          :class="{'button_primary': activeFilter === filter}"
+          :class="{
+            'button_primary': activeFilter === filter,
+            'even:border-x-0': activeFilter !== filter,
+            'border-primary': activeFilter === filter
+          }"
           @click="changeFilter(filter)"
+          class="first:rounded-r-none last:rounded-l-none even:rounded-none"
       >
         {{ filter }}
       </BaseButton>
     </section>
   </section>
 </template>
-
-<style scoped lang="scss">
-@import '@/assets/variables';
-
-.app-filters {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1.6rem;
-
-  .toggle-group {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    box-sizing: border-box;
-    border: 0.1rem solid $color-light;
-    border-radius: 1.6rem;
-
-    .base-button:not(:last-child) {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-
-    .base-button:not(:first-child) {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-
-    .base-button:nth-child(2) {
-      border-left: none;
-      border-right: none;
-    }
-
-    .base-button.button_primary {
-      border: 2px solid $color-primary;
-
-      font-weight: 450;
-    }
-
-    .base-button.button_primary + .base-button {
-      border-left-color: transparent;
-    }
-
-    .base-button:has(+ .button_primary) {
-      border-right-color: transparent;
-    }
-  }
-}
-</style>

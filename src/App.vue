@@ -219,8 +219,9 @@ export default defineComponent({
       this.observer = new IntersectionObserver(
           this.handleIntersect,
           {
+            root: null,
             rootMargin: '0px',
-            threshold: 1.0
+            threshold: 0.5
           }
       );
 
@@ -302,7 +303,3 @@ export default defineComponent({
     />
   </BaseModal>
 </template>
-
-<style scoped lang="scss">
-
-</style>

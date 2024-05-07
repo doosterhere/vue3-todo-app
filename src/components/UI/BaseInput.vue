@@ -30,21 +30,8 @@ export default defineComponent({
       :placeholder
       :value="modelValue"
       @input="updateInput"
-      class="base-input"
+      class="w-full py-4 px-6 border border-solid border-lightgray rounded-lg box-border
+      text-2xl font-[inherit]
+      outline-0"
   >
 </template>
-
-<style scoped lang="scss">
-.base-input {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-
-  font-size: 1.6rem;
-  font-family: inherit;
-
-  outline: none;
-}
-</style>

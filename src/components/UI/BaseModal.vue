@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent} from 'vue';
 
 export default defineComponent({
   name: 'BaseModal',
@@ -20,41 +20,18 @@ export default defineComponent({
 
 <template>
   <div
-    v-if="isVisible"
-    @click="hideModal"
-    class="modal"
+      v-if="isVisible"
+      @click="hideModal"
+      class="fixed top-0 right-0 bottom-0 left-0 z-50
+      flex
+      bg-black bg-opacity-50"
   >
     <div
-      @click.stop
-      class="modal__content"
+        @click.stop
+        class="m-auto p-8 min-w-[320px] rounded-lg
+        bg-white"
     >
       <slot></slot>
     </div>
   </div>
 </template>
-
-<style scoped lang="scss">
-@import '@/assets/variables';
-
-.modal {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: $z-index-modal;
-
-  display: flex;
-
-  background: rgba(0, 0, 0, 0.5);
-
-  .modal__content {
-    margin: auto;
-    padding: 20px;
-    min-width: 320px;
-    border-radius: 10px;
-
-    background-color: white;
-  }
-}
-</style>

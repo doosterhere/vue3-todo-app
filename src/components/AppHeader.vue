@@ -28,7 +28,7 @@ export default defineComponent({
     activeReport(): string {
       const active = this.stats?.active || 0;
       const thing = active > 1 ? 'things' : 'thing';
-      return `${active} more ${thing} left to do`;
+      return `${active} ${thing} need to do`;
     },
     doneReport(): string {
       const done = this.stats?.done || 0;
@@ -49,14 +49,16 @@ export default defineComponent({
 </script>
 
 <template>
-  <header class="app-header">
-    <div class="title-block">
-      <h3 class="title">
+  <header class="sticky top-0 z-10
+                p-8 flex flex-col justify-center items-center gap-6
+                bg-white">
+    <div class="relative">
+      <h3 class="m-0.5 text-4xl font-medium text-primary">
         Todos list
       </h3>
       <AppSpinner v-if="isLoading"/>
     </div>
-    <div class="app-header__report">
+    <div class="text-2xl text-gray">
       {{ activeReport }}, {{ doneReport }}
     </div>
 
@@ -66,52 +68,8 @@ export default defineComponent({
     />
 
     <BaseButton @click="showAddTodoDialog">
-      <i class="fa-solid fa-plus"></i>
+      <i class="fa-solid fa-plus text-primary"></i>
       Add new todo
     </BaseButton>
   </header>
 </template>
-
-<style scoped lang="scss">
-@import '@/assets/variables';
-
-.app-header {
-  position: sticky;
-  top: 0;
-  z-index: $z-index-header;
-
-  padding: 1.6rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1.6rem;
-
-  background-color: white;
-
-  .title-block {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .title {
-      margin: 5px;
-      font-size: 2.4rem;
-      font-weight: 500;
-      color: $color-primary
-    }
-
-    .spinner {
-      position: absolute;
-      left: 120%;
-    }
-  }
-
-
-  .app-header__report {
-    font-size: 1.4rem;
-    color: gray;
-  }
-}
-</style>

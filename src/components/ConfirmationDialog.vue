@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent} from 'vue';
 
 export default defineComponent({
   name: 'ConfirmationDialog',
@@ -22,34 +22,16 @@ export default defineComponent({
 
 <template>
   <div class="confirmation-dialog">
-    <h4>{{ title }}</h4>
-    <div class="confirmation-dialog__actions">
-      <BaseButton @click="handleYes">
-        <i class="fa-solid fa-check"></i>
+    <h4 class="mb-4 font-medium text-center">{{ title }}</h4>
+    <div class="flex gap-4">
+      <BaseButton @click="handleYes" class="flex-shrink flex-grow flex-auto">
+        <i class="fa-solid fa-check text-done"></i>
         Yes
       </BaseButton>
-      <BaseButton @click="handleNo">
-        <i class="fa-solid fa-ban"></i>
+      <BaseButton @click="handleNo" class="flex-shrink flex-grow flex-auto">
+        <i class="fa-solid fa-ban text-danger"></i>
         No. Go back
       </BaseButton>
     </div>
   </div>
 </template>
-
-<style scoped lang="scss">
-.confirmation-dialog {
-  h4 {
-    font-weight: 500;
-    text-align: center;
-  }
-
-  .confirmation-dialog__actions {
-    display: flex;
-    gap: 10px;
-
-    .base-button {
-      flex: 1 1 auto;
-    }
-  }
-}
-</style>

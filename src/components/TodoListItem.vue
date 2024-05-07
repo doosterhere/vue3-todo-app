@@ -54,7 +54,7 @@ export default defineComponent({
         :class="{ 'line-through' : todo.completed }"
         class="font-normal"
     >
-      {{ todo.title }}
+      {{ todo.id }}. {{ todo.title }}
     </span>
 
     <div class="flex gap-6">

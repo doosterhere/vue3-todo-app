@@ -34,7 +34,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <ul class="todo-list">
+  <ul class="m-0 p-0 list-none">
     <transition-group name="todo-list">
       <TodoListItem
           v-for="todo in todos"
@@ -50,13 +50,6 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-.todo-list {
-  margin: 0;
-  padding: 0;
-
-  list-style: none;
-}
-
 .todo-list-item {
   display: inline-block;
   margin-right: 10px;

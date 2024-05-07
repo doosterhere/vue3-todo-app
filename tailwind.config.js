@@ -14,6 +14,7 @@ export default {
                 'light': '#f0f0f0',
                 'gray': '#9e9e9e',
                 'danger': '#de1203',
+                'lightgray': '#ccc'
             }
         },
     },

@@ -1,12 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-    content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+    content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,vue}"],
     theme: {
         extend: {
             fontFamily: {
                 'main': ['Roboto', 'sans-serif']
             },
-            color: {
+            colors: {
                 'default': '#000000',
                 'primary': '#1a6ad0',
                 'secondary': '#e3e3e3',

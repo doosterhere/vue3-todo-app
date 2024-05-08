@@ -47,7 +47,7 @@ export default defineComponent({
             'border-primary': activeFilter === filter
           }"
           @click="changeFilter(filter)"
-          class="first:rounded-r-none last:rounded-l-none even:rounded-none"
+          class="first:rounded-r-none last:rounded-l-none even:rounded-none before-active:border-r-transparent after-active:border-l-transparent"
       >
         {{ filter }}
       </BaseButton>

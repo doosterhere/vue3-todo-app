@@ -16,7 +16,7 @@ export default defineComponent({
   <button
       :type
       class="py-2 px-3.5 flex justify-center items-center gap-4 border border-lightgray rounded-lg
-      font-[inherit]
+      font-[inherit] text-[inherit] dark:text-slate-300
       bg-transparent
       cursor-pointer
       active:scale-95

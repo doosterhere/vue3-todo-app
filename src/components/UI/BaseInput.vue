@@ -31,7 +31,8 @@ export default defineComponent({
       :value="modelValue"
       @input="updateInput"
       class="w-full py-4 px-6 border border-solid border-lightgray rounded-lg box-border
-      text-2xl font-[inherit]
+      text-2xl font-[inherit] text-[inherit] dark:text-slate-300
+      bg-white dark:bg-slate-500
       outline-0"
   >
 </template>

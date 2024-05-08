@@ -29,7 +29,7 @@ export default defineComponent({
     <div
         @click.stop
         class="m-auto p-8 min-w-[320px] sm:min-w-[480px] rounded-lg
-        bg-white"
+        bg-white dark:bg-slate-700"
     >
       <slot></slot>
     </div>

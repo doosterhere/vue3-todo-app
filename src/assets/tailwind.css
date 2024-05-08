@@ -4,11 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
-.button_primary {
+button.button_primary {
     @apply border-2 border-primary
-    text-primary font-medium;
+    text-primary dark:text-primary font-medium;
 }
 
-.button_small {
+button.button_small {
     @apply p-0;
 }

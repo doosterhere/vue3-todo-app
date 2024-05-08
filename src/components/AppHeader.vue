@@ -51,7 +51,7 @@ export default defineComponent({
 <template>
   <header class="sticky top-0 z-10
                 p-8 flex flex-col justify-center items-center gap-6
-                bg-white">
+                bg-white dark:bg-slate-900">
     <div class="relative">
       <h3 class="m-0.5 text-4xl font-medium text-primary">
         Todos list

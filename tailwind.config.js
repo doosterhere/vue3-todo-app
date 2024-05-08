@@ -3,6 +3,7 @@ import plugin from "tailwindcss/plugin";
 
 export default {
     content: ["./index.html", "./src/**/*.{js,ts,vue}"],
+    darkMode: 'class',
     theme: {
         extend: {
             fontFamily: {
@@ -26,6 +27,8 @@ export default {
     plugins: [
         plugin(function ({addVariant}) {
             addVariant('not-last-child', '&:not(:last-child)');
+            addVariant('before-active', '&:has(+ .button_primary)');
+            addVariant('after-active', '&.button_primary + button');
         })
     ],
 }

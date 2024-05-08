@@ -3,7 +3,6 @@ import plugin from "tailwindcss/plugin";
 
 export default {
     content: ["./index.html", "./src/**/*.{js,ts,vue}"],
-    darkMode: 'class',
     theme: {
         extend: {
             fontFamily: {
@@ -14,6 +13,7 @@ export default {
                 'primary': '#1a6ad0',
                 'secondary': '#e3e3e3',
                 'done': '#029639',
+                'done-light': '#14b24a',
                 'light': '#f0f0f0',
                 'gray': '#9e9e9e',
                 'danger': '#de1203',
